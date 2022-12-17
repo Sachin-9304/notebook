@@ -7,6 +7,8 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const cors = require('cors')
+app.use(cors())
 
 
 
@@ -277,9 +279,7 @@ app.get('/current/notes',passport.authenticate('jwt',{session:false}),async (req
         })
     }
     if (notes.length==0){
-        return res.status(400).json({
-            "err":"notes doesn't found"
-        })
+        res.send(notes)
     }
     res.send(notes)
 })
@@ -345,6 +345,6 @@ app.put('/edit/:notesid',passport.authenticate('jwt',{session:false}),async(req,
 
 })
 
-app.listen(3000, () => {
+app.listen(5000, () => {
     console.log("server is running")
 })
